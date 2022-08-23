@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, ActivityIndicator } from "react-native";
-import styled from "styled-components";
 import { useFonts } from "expo-font";
-import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -11,34 +10,19 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./components/screens/HomeScreen";
 import LiveScreen from "./components/screens/LiveScreen";
 import ProfileScreen from "./components/screens/ProfileScreen";
-import GameScreen from "./components/screens/GameScreen";
 import Settings from "./components/screens/Settings";
+import Starter from "./components/screens/Starter";
 
 const AppStack = createStackNavigator();
 const TabNav = createBottomTabNavigator();
 
-const tabBarOptions = {
-  tabBarShowLabel: false,
-  style: {
-    backgroundColor: "#ddc8be",
-  },
-  tabBarStyle: {
-    backgroundColor: "#343434",
-    borderTopColor: "#343434",
-    paddingBottom: 26,
-  },
-};
-
 const TabNavScreen = () => {
   return (
     <TabNav.Navigator
-      //tabBarShowLabel={false}
-
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "white",
-
           borderTopWidth: 2,
           borderTopColor: "white",
           height: 120,
@@ -119,25 +103,17 @@ export default function App() {
   if (!loaded) {
     return (
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color={"pink"} />
+        <ActivityIndicator size="large" color={"white"} />
       </View>
     );
   }
   return (
     <NavigationContainer>
-      <AppStack.Navigator
-        /*mode="modal"*/ screenOptions={{ headerShown: false }}
-      >
+      <AppStack.Navigator screenOptions={{ headerShown: false }}>
+        <AppStack.Screen name="Starter" component={Starter} />
         <AppStack.Screen name="App" component={TabNavScreen} />
-        <AppStack.Screen name="GameScreen" component={GameScreen} />
         <AppStack.Screen name="Settings" component={Settings} />
       </AppStack.Navigator>
     </NavigationContainer>
   );
 }
-
-const TabBarIconContainer = styled.View`
-  background-color: ${(props) => (props.focused ? "#819ee5" : "#343434")};
-  padding: 2px 16px;
-  border-radius: 22px;
-`;
